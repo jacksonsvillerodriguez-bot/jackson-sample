@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NavAIgate Careers — Discover Your Ideal Career Path</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #0b0f14;
+    --ink-soft: #1e2530;
+    --slate: #3b4557;
+    --mist: #8a94a6;
+    --line: rgba(255,255,255,0.08);
+    --gold: #c8a96e;
+    --gold-light: #e2c99a;
+    --cream: #f5f0e8;
+    --white: #ffffff;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--ink);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: transparent;
+    transition: background 0.5s, backdrop-filter 0.5s, padding 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(11,15,20,0.85);
+    backdrop-filter: blur(20px);
+    padding: 14px 48px;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mist);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 10px 24px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s, color 0.25s;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--ink); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 30%, rgba(200,169,110,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(45,212,191,0.04) 0%, transparent 50%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 80%);
+  }
+  .hero-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 104px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    max-width: 860px;
+    color: var(--white);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s 0.4s forwards;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--mist);
+    max-width: 520px;
+    margin-top: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.9s 0.6s forwards;
+  }
+  .hero-cta-group {
+    display: flex;
+    gap: 16px;
+    margin-top: 44px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.9s 0.8s forwards;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 16px 36px;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+  .btn-primary:hover::after { transform: translateX(100%); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(200,169,110,0.3); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 16px 28px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white);
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
+  .hero-trust {
+    margin-top: 64px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    opacity: 0;
+    animation: fadeUp 0.9s 1.1s forwards;
+  }
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .trust-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .trust-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .trust-div { width: 1px; height: 44px; background: var(--line); }
+
+  /* ── SECTION BASE ── */
+  section { padding: 120px 24px; position: relative; }
+  .container { max-width: 1120px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .section-sub {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--mist);
+    max-width: 560px;
+  }
+
+  /* ── WHY SECTION ── */
+  .why { background: var(--ink-soft); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+  }
+  .why-card {
+    padding: 48px 40px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, background 0.3s;
+    will-change: transform;
+  }
+  .why-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .why-card:hover::before { transform: scaleX(1); }
+  .why-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.04); }
+  .why-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: var(--teal-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    font-size: 24px;
+  }
+  .why-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: var(--white);
+  }
+  .why-card p {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--mist);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how { background: var(--ink); }
+  .how-header { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 80px; }
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .how-connector {
+    position: absolute;
+    top: 52px;
+    left: calc(33.33% - 0px);
+    width: 33.33%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .how-connector.c2 {
+    left: calc(66.66% - 0px);
+    background: linear-gradient(90deg, transparent, var(--gold));
+    width: 0;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 32px;
+    position: relative;
+  }
+  .step-num {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,110,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    position: relative;
+    background: rgba(200,169,110,0.04);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--gold);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .step:hover .step-num { border-color: var(--gold); background: rgba(200,169,110,0.1); }
+  .step h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .step p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--mist);
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--ink-soft); overflow: hidden; }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-frame {
+    position: absolute;
+    inset: -16px -16px auto auto;
+    width: 70%;
+    height: 70%;
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    opacity: 0.3;
+  }
+  .about-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: 2px;
+    filter: grayscale(20%);
+  }
+  .about-badge {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 20px 24px;
+    border-radius: 2px;
+  }
+  .about-badge strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .about-badge span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .about-content .section-sub { margin-bottom: 36px; }
+  .about-check {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 44px;
+  }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 15px;
+    color: var(--cream);
+  }
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--teal-dim);
+    border: 1px solid var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--teal);
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* ── STATS BAR ── */
+  .stats {
+    background: var(--gold);
+    padding: 60px 24px;
+  }
+  .stats-inner {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: center;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .stat-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(11,15,20,0.65);
+    margin-top: 6px;
+  }
+  .stat-div { width: 1px; height: 60px; background: rgba(11,15,20,0.2); }
+
+  /* ── TESTIMONIALS ── */
+  .testi { background: var(--ink); }
+  .testi-header { text-align: center; margin-bottom: 64px; }
+  .testi-header .section-sub { margin: 0 auto; }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .testi-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, border-color 0.3s, background 0.3s;
+  }
+  .testi-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(200,169,110,0.2);
+    background: rgba(255,255,255,0.04);
+  }
+  .stars { color: var(--gold); font-size: 16px; letter-spacing: 2px; margin-bottom: 24px; }
+  .testi-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--cream);
+    flex: 1;
+    margin-bottom: 32px;
+  }
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+  .testi-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--slate);
+    border: 2px solid rgba(200,169,110,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold);
+    overflow: hidden;
+  }
+  .testi-name { font-size: 15px; font-weight: 500; }
+  .testi-role { font-size: 12px; color: var(--mist); margin-top: 2px; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--ink-soft);
+    text-align: center;
+    padding: 140px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(200,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-section .section-title { max-width: 700px; margin: 0 auto 20px; }
+  .cta-section .section-sub { margin: 0 auto 48px; }
+  .cta-checks {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .cta-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--mist);
+  }
+  .cta-check .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060a0e;
+    padding: 48px 24px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+  footer .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  footer .logo span { color: var(--gold); }
+  footer p {
+    font-size: 13px;
+    color: var(--mist);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+
+  /* ── PARALLAX FLOAT ── */
+  .float-shape {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .shape-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
+    top: -100px; right: -150px;
+  }
+  .shape-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(45,212,191,0.05) 0%, transparent 70%);
+    bottom: -80px; left: -100px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ── SCROLL PROGRESS ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--teal));
+    z-index: 200;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* ── CURSOR ── */
+  .cursor {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,110,0.5);
+    position: fixed;
+    pointer-events: none;
+    z-index: 9997;
+    transform: translate(-50%, -50%);
+    transition: transform 0.12s ease-out, width 0.2s, height 0.2s;
+  }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6,10,14,0.88);
+    backdrop-filter: blur(12px);
+  }
+  .modal-box {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 520px;
+    background: #141920;
+    border: 1px solid rgba(200,169,110,0.2);
+    border-radius: 4px;
+    padding: 56px 48px 48px;
+    transform: translateY(28px) scale(0.97);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,169,110,0.05);
+  }
+  .modal-overlay.open .modal-box {
+    transform: translateY(0) scale(1);
+  }
+  .modal-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 36px; height: 36px;
+    border: 1px solid var(--line);
+    background: transparent;
+    border-radius: 50%;
+    color: var(--mist);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+    line-height: 1;
+  }
+  .modal-close:hover { border-color: var(--gold); color: var(--gold); }
+  .modal-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .modal-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(200,169,110,0.25); }
+  .modal-box h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .modal-box h2 em { font-style: italic; color: var(--gold-light); }
+  .modal-desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--mist);
+    margin-bottom: 32px;
+  }
+  /* Form fields */
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+  .form-group label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 13px 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-group select { cursor: pointer; }
+  .form-group select option { background: #141920; }
+  .form-group input::placeholder { color: rgba(138,148,166,0.5); }
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--gold);
+    background: rgba(200,169,110,0.04);
+  }
+  .form-group input.error { border-color: #e05c5c; }
+  .field-error { font-size: 11px; color: #e05c5c; margin-top: 2px; display: none; }
+  .field-error.show { display: block; }
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    border-radius: 2px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-submit::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+  .form-submit:hover::after { transform: translateX(100%); }
+  .form-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(200,169,110,0.35); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+  .form-privacy {
+    text-align: center;
+    font-size: 11px;
+    color: rgba(138,148,166,0.6);
+    margin-top: 16px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .form-privacy svg { flex-shrink: 0; }
+  /* Success state */
+  .modal-success {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .modal-success.show { display: block; }
+  .modal-form.hide { display: none; }
+  .success-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(45,212,191,0.1);
+    border: 1px solid var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 28px;
+  }
+  .modal-success h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .modal-success p {
+    font-size: 14px;
+    color: var(--mist);
+    line-height: 1.65;
+  }
+
+  /* Mailchimp notice banner */
+  .mc-notice {
+    background: rgba(200,169,110,0.08);
+    border: 1px solid rgba(200,169,110,0.2);
+    border-radius: 2px;
+    padding: 10px 14px;
+    font-size: 11.5px;
+    color: var(--gold-light);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .mc-notice a { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { display: none; }
+    .why-grid, .how-steps, .testi-grid { grid-template-columns: 1fr; }
+    .about-inner { grid-template-columns: 1fr; }
+    .about-img-wrap { display: none; }
+    .stats-inner { gap: 40px; flex-wrap: wrap; }
+    .hero-trust { flex-wrap: wrap; justify-content: center; }
+    .modal-box { padding: 40px 28px 36px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── SIGNUP MODAL ── -->
+<div class="modal-overlay" id="signupModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+
+    <!-- Form -->
+    <div class="modal-form" id="modalForm">
+      <p class="modal-eyebrow">Free Career Assessment</p>
+      <h2 id="modalTitle">Start Your <em>Journey</em></h2>
+      <p class="modal-desc">Get personalized career insights delivered straight to your inbox. Takes less than 5 minutes.</p>
+
+      <!-- ⚠️ EMAILJS SETUP NOTICE — remove once Service ID & Template ID are set -->
+      <div class="mc-notice" id="mcNotice">
+        <strong>⚙️ Almost live!</strong> Add your <code>Service ID</code> &amp; <code>Template ID</code> from <a href="https://dashboard.emailjs.com" target="_blank" rel="noopener">emailjs.com</a> into the HTML. Use template variables: <code>{{first_name}}</code>, <code>{{last_name}}</code>, <code>{{email}}</code>, <code>{{role}}</code>.
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mc-fname">First Name</label>
+          <input type="text" id="mc-fname" name="FNAME" placeholder="Sarah" autocomplete="given-name">
+          <span class="field-error" id="err-fname">Please enter your first name.</span>
+        </div>
+        <div class="form-group">
+          <label for="mc-lname">Last Name</label>
+          <input type="text" id="mc-lname" name="LNAME" placeholder="Mitchell" autocomplete="family-name">
+          <span class="field-error" id="err-lname">Please enter your last name.</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="mc-email">Email Address</label>
+        <input type="email" id="mc-email" name="EMAIL" placeholder="sarah@example.com" autocomplete="email">
+        <span class="field-error" id="err-email">Please enter a valid email address.</span>
+      </div>
+      <div class="form-group">
+        <label for="mc-role">Your Current Role</label>
+        <select id="mc-role" name="ROLE">
+          <option value="" disabled selected>Select your profession</option>
+          <option>Licensed Therapist / Counselor</option>
+          <option>Clinical Social Worker</option>
+          <option>Behavioral Health Manager</option>
+          <option>Psychiatric Nurse Practitioner</option>
+          <option>Psychologist</option>
+          <option>Case Manager</option>
+          <option>Student / Early Career</option>
+          <option>Other Healthcare Professional</option>
+        </select>
+      </div>
+
+      <button class="form-submit" id="formSubmit" type="button">
+        Get My Free Assessment →
+      </button>
+      <p class="form-privacy">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M9 5V4a3 3 0 1 0-6 0v1H2v6h8V5H9ZM5 4a1 1 0 1 1 2 0v1H5V4Z" fill="currentColor" opacity=".5"/></svg>
+        We never share your info. Unsubscribe anytime.
+      </p>
+    </div>
+
+    <!-- Success -->
+    <div class="modal-success" id="modalSuccess">
+      <div class="success-icon">✓</div>
+      <h3>You're <em style="font-style:italic;color:var(--gold-light)">in!</em></h3>
+      <p>Check your inbox — your personalized career assessment link is on its way.<br><br>
+      <span style="color:var(--teal);font-size:13px">Add keith@navigatecareers.com to your contacts so it doesn't land in spam.</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Nav<span>AI</span>gate Careers</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#stories">Success Stories</a></li>
+    <li><a href="#how">How It Works</a></li>
+  </ul>
+  <button class="nav-cta open-modal">Get Assessment</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="float-shape shape-1"></div>
+  <div class="float-shape shape-2"></div>
+
+  <p class="hero-eyebrow">Career Intelligence Platform</p>
+  <h1>Discover Your <em>Ideal</em><br>Career Path</h1>
+  <p class="hero-sub">Take our free career assessment and receive personalized insights about your strengths, interests, and potential career paths — in just a few minutes.</p>
+
+  <div class="hero-cta-group" id="assessment">
+    <button class="btn-primary open-modal">
+      Get My Free Assessment
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <a href="#about" class="btn-ghost">Meet Keith</a>
+  </div>
+
+  <div class="hero-trust">
+    <div class="trust-item">
+      <span class="trust-num">15+</span>
+      <span class="trust-label">Years Experience</span>
+    </div>
+    <div class="trust-div"></div>
+    <div class="trust-item">
+      <span class="trust-num">93%</span>
+      <span class="trust-label">Direct Hire Rate</span>
+    </div>
+    <div class="trust-div"></div>
+    <div class="trust-item">
+      <span class="trust-num">Free</span>
+      <span class="trust-label">Assessment</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="container">
+    <p class="section-label reveal">Why Take the Assessment?</p>
+    <h2 class="section-title reveal reveal-d1">Built for Behavioral<br>Health <em>Professionals</em></h2>
+    <div class="why-grid">
+      <div class="why-card reveal reveal-d1">
+        <div class="why-icon">🎯</div>
+        <h3>Identify Your Strengths</h3>
+        <p>Understand the skills and talents that set you apart and give you a measurable advantage in the behavioral health field.</p>
+      </div>
+      <div class="why-card reveal reveal-d2">
+        <div class="why-icon">🗺️</div>
+        <h3>Explore Career Paths</h3>
+        <p>Discover opportunities that align with your interests, values, and professional goals — beyond where you are today.</p>
+      </div>
+      <div class="why-card reveal reveal-d3">
+        <div class="why-icon">🚀</div>
+        <h3>Unlock Leadership Potential</h3>
+        <p>Gain the insights to grow with confidence and achieve your next career milestone, whether clinical or executive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="how-header">
+      <p class="section-label reveal">The Process</p>
+      <h2 class="section-title reveal reveal-d1">How It <em>Works</em></h2>
+      <p class="section-sub reveal reveal-d2">A simple three-step process designed to deliver valuable career insights — no guesswork, no commitment.</p>
+    </div>
+    <div class="how-steps">
+      <div class="step reveal reveal-d1">
+        <div class="step-num">1</div>
+        <h3>Register</h3>
+        <p>Create your free account in under a minute — no credit card required.</p>
+      </div>
+      <div class="step reveal reveal-d2">
+        <div class="step-num">2</div>
+        <h3>Complete Assessment</h3>
+        <p>Answer a few targeted questions about your strengths, interests, and work preferences.</p>
+      </div>
+      <div class="step reveal reveal-d3">
+        <div class="step-num">3</div>
+        <h3>Receive Insights</h3>
+        <p>Get personalized results with career recommendations and clear next steps tailored to you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-img-wrap reveal">
+        <div class="about-img-frame"></div>
+        <img class="about-img"
+          src="https://d1yei2z3i6k35z.cloudfront.net/18008274/6a31af35574fd4.39945160_ChatGPTImageJun16202602_18_34AM.png"
+          alt="Keith D. Peters"
+          onerror="this.style.background='#1e2530';this.removeAttribute('src')"
+        >
+        <div class="about-badge">
+          <strong>15+</strong>
+          <span>Years Leading<br>Healthcare Talent</span>
+        </div>
+      </div>
+      <div class="about-content">
+        <p class="section-label reveal">The Expert Behind It</p>
+        <h2 class="section-title reveal reveal-d1">Keith D. <em>Peters</em></h2>
+        <p class="section-sub reveal reveal-d2">Keith has dedicated his career to helping behavioral health professionals achieve their full potential. Through expert career guidance, workforce development leadership, and personalized coaching, he empowers professionals to navigate transitions and achieve long-term success with confidence.</p>
+        <div class="about-check reveal reveal-d3">
+          <div class="check-item">
+            <div class="check-icon">✓</div>
+            Founder &amp; CEO, NavAIgate Careers
+          </div>
+          <div class="check-item">
+            <div class="check-icon">✓</div>
+            Healthcare Workforce Development Leader
+          </div>
+          <div class="check-item">
+            <div class="check-icon">✓</div>
+            Talent Acquisition &amp; Coaching Expert
+          </div>
+        </div>
+        <button class="btn-primary open-modal reveal reveal-d4">Start Your Assessment</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner container">
+    <div class="stat-item reveal">
+      <div class="stat-num">15+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item reveal reveal-d2">
+      <div class="stat-num">93%</div>
+      <div class="stat-label">Direct Hire Rate</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item reveal reveal-d3">
+      <div class="stat-num">&lt;5min</div>
+      <div class="stat-label">To Complete</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item reveal reveal-d4">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Free Assessment</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testi" id="stories">
+  <div class="container">
+    <div class="testi-header">
+      <p class="section-label reveal">Success Stories</p>
+      <h2 class="section-title reveal reveal-d1">Professionals Who Found <em>Clarity</em></h2>
+      <p class="section-sub reveal reveal-d2">See how healthcare professionals have advanced their careers and achieved their goals through personalized career insights.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal reveal-d1">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"The assessment helped me identify a leadership path I hadn't considered. Within six months, I secured a management role I genuinely love."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sarah M.</div>
+            <div class="testi-role">Behavioral Health Manager</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-d2">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"The career insights were incredibly accurate and gave me the confidence to pursue opportunities I would have never considered on my own."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">Michael T.</div>
+            <div class="testi-role">Licensed Therapist</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-d3">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"Keith's guidance helped me navigate my next career move with a clear plan and measurable goals. I felt supported every step of the way."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">J</div>
+          <div>
+            <div class="testi-name">Jennifer R.</div>
+            <div class="testi-role">Clinical Social Worker</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="container">
+    <p class="section-label reveal">Your Next Step</p>
+    <h2 class="section-title reveal reveal-d1">Ready to Unlock Your<br><em>Career Potential?</em></h2>
+    <p class="section-sub reveal reveal-d2">Take the free career assessment and receive personalized insights to help guide your next professional move.</p>
+    <button class="btn-primary open-modal reveal reveal-d3" style="margin: 0 auto; display: inline-flex;">
+      Unlock Your Career Potential
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="cta-checks reveal reveal-d4">
+      <div class="cta-check"><span class="dot"></span> Free Assessment</div>
+      <div class="cta-check"><span class="dot"></span> Personalized Results</div>
+      <div class="cta-check"><span class="dot"></span> Takes Less Than 5 Minutes</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Nav<span>AI</span>gate Careers</div>
+  <p>© 2026 NavAIgate Careers. All Rights Reserved.</p>
+</footer>
+
+<script>
+  // ── SCROLL PROGRESS ──
+  const progress = document.getElementById('progress');
+  function updateProgress() {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    progress.style.width = (scrolled / total * 100) + '%';
+  }
+
+  // ── NAV SCROLL ──
+  const nav = document.getElementById('nav');
+  function updateNav() {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }
+
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => revealObs.observe(el));
+
+  // ── CURSOR ──
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px'; cursor.style.height = '20px';
+      ring.style.width = '54px'; ring.style.height = '54px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '10px'; cursor.style.height = '10px';
+      ring.style.width = '36px'; ring.style.height = '36px';
+    });
+  });
+
+  // ── PARALLAX HERO SHAPES ──
+  const shapes = document.querySelectorAll('.float-shape');
+  function parallax() {
+    const y = window.scrollY;
+    shapes.forEach((s, i) => {
+      s.style.transform = `translateY(${y * (i === 0 ? 0.15 : -0.12)}px)`;
+    });
+  }
+
+  // ── COMBINED SCROLL ──
+  window.addEventListener('scroll', () => {
+    updateProgress();
+    updateNav();
+    parallax();
+  }, { passive: true });
+
+  // ── COUNTER ANIMATION ──
+  function animateCount(el, target, suffix = '', duration = 1500) {
+    const start = performance.now();
+    const isFloat = target % 1 !== 0;
+    function step(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const val = isFloat ? (target * ease).toFixed(1) : Math.round(target * ease);
+      el.textContent = val + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  const statNums = document.querySelectorAll('.stat-num, .trust-num');
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const text = el.textContent.trim();
+        const num = parseFloat(text.replace(/[^0-9.]/g, ''));
+        const suffix = text.replace(/[0-9.]/g, '');
+        if (!isNaN(num) && num > 0) animateCount(el, num, suffix);
+        counterObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  statNums.forEach(el => counterObs.observe(el));
+  // ── EMAILJS CONFIG ──
+  const EJS_PUBLIC_KEY  = 'XiEN_s2rAuWUFJS';  // ✅ your public key
+  const EJS_SERVICE_ID  = 'service_4htp1x4';    // ✅ your service ID
+  const EJS_TEMPLATE_ID = 'template_xc6r3r8';   // ✅ your template ID
+
+  // Load EmailJS SDK
+  (function(){
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    s.onload = () => emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+    document.head.appendChild(s);
+  })();
+
+  const modal = document.getElementById('signupModal');
+  const modalForm = document.getElementById('modalForm');
+  const modalSuccess = document.getElementById('modalSuccess');
+  const submitBtn = document.getElementById('formSubmit');
+
+  function openModal() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('mc-fname').focus(), 400);
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.open-modal').forEach(el => el.addEventListener('click', openModal));
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Validate fields
+  function validate() {
+    let ok = true;
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    [['mc-fname','err-fname', v => v.trim().length > 0],
+     ['mc-lname','err-lname', v => v.trim().length > 0],
+     ['mc-email','err-email', v => emailRe.test(v)]
+    ].forEach(([id, errId, test]) => {
+      const el = document.getElementById(id);
+      const err = document.getElementById(errId);
+      if (!test(el.value)) {
+        el.classList.add('error'); err.classList.add('show'); ok = false;
+      } else {
+        el.classList.remove('error'); err.classList.remove('show');
+      }
+    });
+    return ok;
+  }
+
+  // Submit → EmailJS
+  submitBtn.addEventListener('click', async () => {
+    if (!validate()) return;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    const templateParams = {
+      from_name:  document.getElementById('mc-fname').value + ' ' + document.getElementById('mc-lname').value,
+      first_name: document.getElementById('mc-fname').value,
+      last_name:  document.getElementById('mc-lname').value,
+      email:      document.getElementById('mc-email').value,
+      role:       document.getElementById('mc-role').value || 'Not specified',
+      reply_to:   document.getElementById('mc-email').value,
+    };
+
+    // Demo mode if IDs not yet set
+    if (EJS_SERVICE_ID === 'YOUR_SERVICE_ID' || EJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID') {
+      console.log('EmailJS demo mode — params:', templateParams);
+      showSuccess();
+      return;
+    }
+
+    try {
+      await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, templateParams);
+      showSuccess();
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Try Again';
+      alert('Something went wrong. Please try again or email us directly.');
+    }
+  });
+
+  function showSuccess() {
+    modalForm.classList.add('hide');
+    modalSuccess.classList.add('show');
+  }
+
+  // Re-attach cursor listeners for modal buttons
+  document.querySelectorAll('.open-modal, .modal-close, .form-submit').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px'; cursor.style.height = '20px';
+      ring.style.width = '54px'; ring.style.height = '54px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '10px'; cursor.style.height = '10px';
+      ring.style.width = '36px'; ring.style.height = '36px';
+    });
+  });
+</script>
+</body>
+</html>
